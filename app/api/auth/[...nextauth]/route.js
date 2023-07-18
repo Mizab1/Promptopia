@@ -13,7 +13,7 @@ const handler = NextAuth({
   async session({ session }) {
     const sessionUser = await User.findOne({ email: session.user.email });
     session.user.id = sessionUser._id.toString();
-    return true;
+    return session;
   },
   async signIn({ profile }) {
     try {
@@ -26,6 +26,7 @@ const handler = NextAuth({
           image: profile.picture,
         });
       }
+      return true;
     } catch (error) {
       console.log(error);
       return false;
