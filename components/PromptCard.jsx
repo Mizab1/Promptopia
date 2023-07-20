@@ -6,6 +6,18 @@ import { usePathname, useRouter } from "next/navigation";
 
 const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
   const [copied, setCopied] = useState("");
+  const { data: session } = useSession();
+  const pathName = usePathname();
+  const router = useRouter();
+
+  const handleCopy = () => {
+    setCopied(post.prompt);
+    navigator.clipboard.writeText(post.prompt);
+    setTimeout(() => {
+      setCopied("");
+    }, 3000);
+  };
+
   return (
     <div className="prompt_card">
       <div className="flex justify-between items-start gap-2">
@@ -25,7 +37,11 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
               {post.creator.email}
             </p>
           </div>
-          <div className="copy_btn" onClick={() => {}}>
+          <div
+            className="copy_btn"
+            onClick={() => {
+              handleCopy();
+            }}>
             <button>
               <Image
                 src={
@@ -46,6 +62,24 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
         onClick={() => handleTagClick && handleTagClick(post.tag)}>
         {post.tag}
       </p>
+      {session?.user.id === post.creator._id && pathName === "/profile" && (
+        <div className="flex flex-row gap-3 pt-4 flex-center">
+          <p
+            className="font-inter text-sm green_gradient cursor-pointer border rounded-md p-1"
+            onClick={() => {
+              handleEdit();
+            }}>
+            Edit
+          </p>
+          <p
+            className="font-inter text-sm orange_gradient cursor-pointer border rounded-md p-1"
+            onClick={() => {
+              handleDelete();
+            }}>
+            Delete
+          </p>
+        </div>
+      )}
     </div>
   );
 };
