@@ -15,3 +15,8 @@ Promptopia is a prompts sharing web app where you can share your prompts.
 * MongoDB
 * NextAuth
 * Tailwind CSS
+
+## Images
+![Image](public/assets/showcase/promptopia.png)
+![Image](public/assets/showcase/promptopia_2.png)
+![Image](public/assets/showcase/promptopia_3.png)
